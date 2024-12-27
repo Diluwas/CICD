@@ -35,7 +35,6 @@ jobs:
         export GOOGLE_APPLICATION_CREDENTIALS=~/key.json
         cd terraform
         echo $GOOGLE_APPLICATION_CREDENTIALS
-        ll
         cat key.json
         terraform init
       env:
