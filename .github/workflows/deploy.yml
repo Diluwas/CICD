@@ -18,6 +18,15 @@ jobs:
     - name: Setup Terraform
       uses: hashicorp/setup-terraform@v3
 
+    - name: Get GCP key
+      id: credentials
+      run: |
+        #Get GCP credentials
+        echo "${KEY}" | base64 -d > ~/key.json
+        export GOOGLE_APPLICATION_CREDENTIALS=~/key.json
+      env:
+        KEY: ${{secrets.SERVICE_TOKEN}}
+        
     # Initialize a new or existing Terraform working directory by creating initial files, loading any remote state, downloading modules, etc.
     - name: Terraform Init
       id: init
