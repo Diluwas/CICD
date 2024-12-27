@@ -1,6 +1,6 @@
 variable "project" {
   description = "The GCP project id"
-  default     = "demo-cicd"
+  default     = "glass-ranger-446005-t8"
   type        = string
 }
 

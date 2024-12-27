@@ -1,5 +1,5 @@
 resource "google_storage_bucket" "cloud_function_bucket" {
-  name          = join("-", concat(["cicd-demo-cf-bucket", terrform.workspace]))
+  name          = join("-", concat(["cicd-demo-cf-bucket", terraform.workspace]))
   provider      = google
   location      = var.region
   force_destroy = true
@@ -7,7 +7,6 @@ resource "google_storage_bucket" "cloud_function_bucket" {
 
 data "archive_file" "weather_service_file" {
   type        = "zip"
-  provider    = google-beta
   output_path = "${path.module}/.files/weather_service.zip"
   source {
     content  = file("${local.src_dir}/api/main.py")
@@ -31,13 +30,13 @@ resource "google_storage_bucket_object" "weather_service_zip" {
 }
 
 resource "google_cloudfunctions2_function" "weather_service" {
-  name        = join("-", concat(["weather-service", terrform.workspace]))
+  name        = join("-", concat(["weather-service", terraform.workspace]))
   description = "Small cloud function to get weather information"
   location    = var.region
   build_config {
     runtime     = "python311"
-    entry_point = "handleHttpRequest" #function to trigger
-    source {                          #source code location
+    entry_point = "handle_request" #function to trigger
+    source {                       #source code location
       storage_source {
         bucket = google_storage_bucket.cloud_function_bucket.name
         object = google_storage_bucket_object.weather_service_zip.name

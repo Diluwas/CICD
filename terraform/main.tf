@@ -1,6 +1,6 @@
 terraform {
   backend "gcs" {
-    bucket = "cicd-dilun-demo"
+    bucket = "cicd-sandeepa-demo"
     prefix = "terraform/edge"
   }
   required_providers {
@@ -12,6 +12,11 @@ terraform {
     google-beta = {
       source  = "hashicorp/google-beta"
       version = "6.14.1"
+    }
+
+    archive = {
+      source  = "hashicorp/archive"
+      version = "2.7.0"
     }
   }
 }
@@ -27,7 +32,7 @@ provider "google-beta" {
 }
 
 data "google_project" "project" {
-
+  project_id = var.project
 }
 
 data "google_client_config" "default" {

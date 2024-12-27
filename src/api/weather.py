@@ -2,6 +2,7 @@ import requests
 
 api_key = "1eb288508efec21247aa848b278a4f42"
 
+
 def format_data(city, data):
     weather = data["weather"][0]["description"]
     temperature = data["main"]["temp"]
@@ -9,6 +10,7 @@ def format_data(city, data):
         f"The weather in {city} is {weather} "
         f"with a temperature of {temperature} Celcius."
     )
+
 
 def get_lat_lon(city):
     url = (
@@ -27,12 +29,12 @@ def get_lat_lon(city):
         print("Failed to retrieve latitude and longitude", data)
         return None, None
 
+
 def get_weather(city):
     lat, lon = get_lat_lon(city)
 
     if lat is None or lon is None:
         return False, f"Failed to retrieve weather  information for {city}"
-    
     print(f"Got Lat Lon for {city}: Latiture - {lat}, Longitude - {lon}")
     url = (
         f"https://api.openweathermap.org/data/2.5/weather?"
@@ -47,7 +49,7 @@ def get_weather(city):
         print("Failed to retrieve weather information", data)
         return False, "Failed to retrieve weather information"
 
+
 if __name__ == "__main__":
     city = "Colombo"
     print(get_weather(city))
-

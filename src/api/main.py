@@ -3,13 +3,13 @@ from flask import abort
 
 from weather import get_weather
 
+
 @functions_framework.http
-def handleHttpRequest(request):
+def handle_request(request):
     if request.method == "GET":
         city = request.args.get("city")
         if not city:
             return abort(404, "Please provide a city")
-        
         sucess, response = get_weather(city)
         if sucess:
             return response
@@ -17,4 +17,3 @@ def handleHttpRequest(request):
             return abort(500, response)
     else:
         return abort(403)
-
