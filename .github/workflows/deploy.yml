@@ -18,11 +18,6 @@ jobs:
     - name: Setup Terraform
       uses: hashicorp/setup-terraform@v3
 
-    - name: List Directory Structure
-      run: | 
-        cd terraform 
-        ls -l
-
     # Initialize a new or existing Terraform working directory by creating initial files, loading any remote state, downloading modules, etc.
     - name: Terraform Init
       id: init
@@ -35,15 +30,13 @@ jobs:
         KEY: ${{secrets.SERVICE_ACCOUNT}}
         GOOGLE_APPLICATION_CREDENTIALS: ~/key.json
 
-    - name: List Directory Structure2
-      run: | 
-        cd terraform 
-        ls -l
-
     # Checks that all Terraform configuration files adhere to a canonical format
     - name: Terraform Format
       id: format
       run: |
+        ls -l
+        cd terraform
+        ls -l
         terraform fmt -check
       env:
         GOOGLE_APPLICATION_CREDENTIALS: ~/key.json
