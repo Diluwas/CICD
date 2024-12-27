@@ -90,15 +90,15 @@ jobs:
         
       - name: Cache plugin dir
         uses: actions/cache@v4
-        
         with:
           path: ~/.tflint.d/plugins
           key: tflint-${{ hashFiles('.tflint.hcl') }}
 
-      - uses: terraform-linters/setup-tflint@v4
-        name: Setup TFLint
+      - name: Setup TFLint
+        uses: terraform-linters/setup-tflint@v4
         with:
           tflint_version: v0.52.0
+          
       - name: Show version
         run: tflint --version
 
