@@ -27,7 +27,7 @@ jobs:
         cd terraform
         terraform init
       env:
-        KEY: ${{secrets.SERVICE_TOKEN}}
+        KEY: ${{secrets.SERVICE_ACCOUNT}}
         GOOGLE_APPLICATION_CREDENTIALS: ~/key.json
 
     # Checks that all Terraform configuration files adhere to a canonical format
