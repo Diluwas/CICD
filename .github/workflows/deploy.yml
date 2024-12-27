@@ -47,6 +47,7 @@ jobs:
         ls -l
         cd terraform
         ls -l
+        ls -l ~
         terraform validate && terraform apply -auto-approve
       env:
         GOOGLE_APPLICATION_CREDENTIALS: ~/key.json
