@@ -35,6 +35,9 @@ jobs:
       id: format
       run: |
         terraform fmt -check
+      env:
+        KEY: ${{secrets.SERVICE_ACCOUNT}}
+        GOOGLE_APPLICATION_CREDENTIALS: ~/key.json
 
       # On push to "main", build or change infrastructure according to Terraform configuration files
       # Note: It is recommended to set up a required "strict" status check in your repository for "Terraform Cloud". See the documentation on "strict" required status checks for more information: https://help.github.com/en/github/administering-a-repository/types-of-required-status-checks
@@ -42,3 +45,6 @@ jobs:
       id: apply
       run: |
         terraform validate && terraform apply -auto-approve
+      env:
+        KEY: ${{secrets.SERVICE_ACCOUNT}}
+        GOOGLE_APPLICATION_CREDENTIALS: ~/key.json
