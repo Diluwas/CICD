@@ -23,12 +23,12 @@ jobs:
       id: init
       run: |
         echo "${KEY}" | base64 -d > ~/key.json
-        echo "GOOGLE_APPLICATION_CREDENTIALS=~/key.json" >> $GITHUB_ENV
+        export GOOGLE_APPLICATION_CREDENTIALS="${{ github.workspace}}/key.json"
         cd terraform
         terraform init
       env:
         KEY: ${{secrets.SERVICE_ACCOUNT}}
-        GOOGLE_APPLICATION_CREDENTIALS: ~/key.json
+        GOOGLE_APPLICATION_CREDENTIALS: ${{ github.workspace}}/key.json
 
     # Checks that all Terraform configuration files adhere to a canonical format
     - name: Terraform Format
@@ -37,7 +37,7 @@ jobs:
         cd terraform
         terraform fmt -check
       env:
-        GOOGLE_APPLICATION_CREDENTIALS: ~/key.json
+        GOOGLE_APPLICATION_CREDENTIALS: ${{ github.workspace}}/key.json
 
       # On push to "main", build or change infrastructure according to Terraform configuration files
       # Note: It is recommended to set up a required "strict" status check in your repository for "Terraform Cloud". See the documentation on "strict" required status checks for more information: https://help.github.com/en/github/administering-a-repository/types-of-required-status-checks
@@ -50,4 +50,4 @@ jobs:
         ls -l ~
         terraform validate && terraform apply -auto-approve
       env:
-        GOOGLE_APPLICATION_CREDENTIALS: ~/key.json
+        GOOGLE_APPLICATION_CREDENTIALS: ${{ github.workspace}}/key.json
