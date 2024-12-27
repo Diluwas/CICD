@@ -24,6 +24,8 @@ else
 	$(MAKE) test-unix
 endif
 
-lint:
+pylint:
 	flake8 src/ tests/
+
+tflint:
 	tflint terraform/
