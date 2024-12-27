@@ -34,9 +34,7 @@ jobs:
     - name: Terraform Format
       id: format
       run: |
-        ls -l
         cd terraform
-        ls -l
         terraform fmt -check
       env:
         GOOGLE_APPLICATION_CREDENTIALS: ~/key.json
@@ -46,6 +44,9 @@ jobs:
     - name: Terraform Apply
       id: apply
       run: |
+        ls -l
+        cd terraform
+        ls -l
         terraform validate && terraform apply -auto-approve
       env:
         GOOGLE_APPLICATION_CREDENTIALS: ~/key.json
