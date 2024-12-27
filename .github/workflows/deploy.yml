@@ -19,16 +19,6 @@ jobs:
       uses: hashicorp/setup-terraform@v3
 
     # Initialize a new or existing Terraform working directory by creating initial files, loading any remote state, downloading modules, etc.
-    - name: Get GCP key
-      id: credentials
-      run: |
-        #Get GCP credentials
-        echo "${KEY}" | base64 -d > ~/key.json
-        export GOOGLE_APPLICATION_CREDENTIALS=~/key.json
-      env:
-        KEY: ${{secrets.SERVICE_TOKEN}}
-
-    # Initialize a new or existing Terraform working directory by creating initial files, loading any remote state, downloading modules, etc.
     - name: Terraform Init
       id: init
       run: |
@@ -43,19 +33,11 @@ jobs:
     - name: Terraform Format
       id: format
       run: |
-        echo "${KEY}" | base64 -d > ~/key.json
-        export GOOGLE_APPLICATION_CREDENTIALS=~/key.json
         terraform fmt -check
-      env:
-        KEY: ${{secrets.SERVICE_TOKEN}}
 
       # On push to "main", build or change infrastructure according to Terraform configuration files
       # Note: It is recommended to set up a required "strict" status check in your repository for "Terraform Cloud". See the documentation on "strict" required status checks for more information: https://help.github.com/en/github/administering-a-repository/types-of-required-status-checks
     - name: Terraform Apply
       id: apply
       run: |
-        echo "${KEY}" | base64 -d > ~/key.json
-        export GOOGLE_APPLICATION_CREDENTIALS=~/key.json
         terraform validate && terraform apply -auto-approve
-      env:
-        KEY: ${{secrets.SERVICE_TOKEN}}
